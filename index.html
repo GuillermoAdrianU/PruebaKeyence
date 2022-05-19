@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>GAUA Prueba técnica</title>
+    </head>
+    <body>
+        <img src="./assets/contratado.jpeg" id="foto">
+        <h1 id="titulo">Prueba técnica KEYENCE</h1>
+        <h3 class="subtitulo">Guillermo Adrian Urbina Aguiñiga</h3>
+        <input type="text" id="texto" placeholder="Escribe la palabra a registrar" onkeypress="registrarPalabra(event)"> 
+        <div id="cuadroPalabras">
+            <ul id="listaPalabras">
+
+            </ul>
+        </div>
+    </body>
+    <style>
+        body {
+            background-color: darkblue;
+        }
+        #foto {
+            width: 20%;
+            height: 20%;
+            margin-left: 40%;
+            margin-top: 5%;
+        }
+        #titulo {
+            text-align: center;
+            margin-top: 5%;
+            color: white;
+        }
+        .subtitulo {
+            text-align: center;
+            margin-top: 2%;
+            color: white;
+        }
+        #texto {
+            width: 80%;
+            position: relative;
+            margin-left: 10%;
+            border-radius: 10px;
+            border-color: black;
+            background-color: lightblue;
+        }
+        #cuadroPalabras {
+            width: 80%;
+            margin-left: 10%;
+        }
+        .palabrasIngresadas {
+            display: inline-block;
+            margin-right: 3%;
+            border: 1px solid;
+            padding: 5px;
+            margin-bottom: 10px;
+            color: white;
+        }
+    </style>
+    <script language="javascript">
+        //Declaración de variables
+        let palabras = []
+        //Función para reconocer el enter y guardar la palabra
+        function registrarPalabra(event) {
+            //Se recupera el elemento html sobre el que se va a trabajar
+            let lista = document.getElementById('listaPalabras')
+            //Se valida que la entrada sea un campo valido de texto con la entrada correcta por la tecla
+            if (event.keyCode == 13 && document.getElementById("texto").value != "") {
+                //Revisa que el nodo tenga hijos, en caso de tener, elimina 1 por 1 su elemento html
+                while(lista.hasChildNodes()) {
+                    lista.removeChild(lista.firstChild)
+                }
+                //Inserta la palabra tecleada en el arreglo de palabras
+                palabras.push(document.getElementById('texto').value)
+                //Por cada elemento del arreglo crea su elemento html de la lista
+                palabras.forEach(function(e, index) {
+                    let elemento = document.createElement('li')
+                    elemento.innerText = e
+                    elemento.setAttribute('class', 'palabrasIngresadas')
+                    lista.appendChild(elemento)
+                })
+                //Resetea el valor del input a vacio
+                document.getElementById("texto").value = ""
+            } 
+            //En caso de tener una entrada no valida de texto y teclar con el enter, manda una alerta de que el campo no es valido
+            else if (document.getElementById("texto").value == "" && event.keyCode == 13) {
+                alert("No puedes registrar campos vacíos")
+            }
+        }
+    </script>
+</html>
